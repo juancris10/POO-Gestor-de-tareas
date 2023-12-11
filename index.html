@@ -1,0 +1,43 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to do list</title>
+    <link href="https://fonts.cdnfonts.com/css/monaco" rel="stylesheet">
+
+</head>
+
+<body>
+    <h1>To do list</h1>
+    <div>
+        <form id="taskForm">
+            <span id="fecha"></span>
+            <br>
+            <label for="title">Titulo:</label>
+            <br>
+            <span id="fechaHora"></span>
+            <br>
+            <input type="text" id="titulo" required>
+            <br>
+            <label for="description">Descripcion:</label>
+            <br>
+            <textarea id="descripcion" required></textarea>
+            <br>
+            <button type="button" onclick="añadirTarea()">Agregar Tarea</button>
+    
+    
+            <ul id="taskList"></ul>
+        </form>
+    </div>
+   
+
+    <script src="task.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>

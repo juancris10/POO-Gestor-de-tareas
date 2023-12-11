@@ -1,0 +1,81 @@
+header{
+    background-color: aqua;
+}
+@import url('https://fonts.cdnfonts.com/css/monaco');
+
+body{
+
+    font-family: 'Monaco', sans-serif;
+
+    background: linear-gradient(180deg, #1EA2CB 0%, rgba(252, 92, 255, 0.00) 100%);
+    margin-bottom: 20rem;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 3.5rem;
+    font-size: 5rem;
+}
+h3 {
+    font-size: 1.5em;
+    margin-inline-start: 10px;
+    font-weight: bold;
+}
+
+#fecha {
+    text-align: left;
+    
+}
+
+
+#taskForm {
+    margin: 0 auto; /* Centrar horizontalmente con margen automático */
+    width: 35rem;
+    text-align: center;
+    font-weight: bold;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: rgb(32, 94, 94);
+    font-size: 2rem;
+    
+}
+
+#taskForm input[type="text"]  {
+
+    width: 20rem;
+    height: 30px;
+    margin-left: 5px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: rgb(32, 94, 94);
+
+}
+#taskForm textarea  {
+    margin-left: 5px;
+    width: 20rem;
+    height: 5rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: rgb(32, 94, 94);
+
+}
+label{
+    font-size: 2.5rem;
+}
+button {
+    background-color: #4CAF50; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor apuntador al pasar sobre el botón */
+}
+
+/* Estilo cuando el mouse está sobre el botón */
+button:hover {
+    background-color: #45a049; /* Cambia el color de fondo al pasar el mouse */
+}
