@@ -1,46 +1,58 @@
-header{
+header {
     background-color: aqua;
 }
+
 @import url('https://fonts.cdnfonts.com/css/monaco');
 
-body{
-
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Monaco', sans-serif;
-
     background: linear-gradient(180deg, #1EA2CB 0%, rgba(252, 92, 255, 0.00) 100%);
     margin-bottom: 20rem;
 }
 
-h1{
+#container {
+    display: flex;
+    align-items: flex-start; /* Alinear en la parte superior */
+}
+
+h1 {
     text-align: center;
     margin-bottom: 3.5rem;
     font-size: 5rem;
+    color: #085008;
+    ;
 }
-h3 {
-    font-size: 1.5em;
+
+h4 {
     margin-inline-start: 10px;
     font-weight: bold;
 }
 
 #fecha {
     text-align: left;
-    
+    font-family: 'Courier New', Courier, monospace;
+
+
 }
-
-
 #taskForm {
-    margin: 0 auto; /* Centrar horizontalmente con margen automático */
+    margin: 0 auto;
+    margin-left: 10rem;
+    margin-top: 10px;
     width: 35rem;
+    background-color: rgb(3, 32, 46);
     text-align: center;
     font-weight: bold;
     border-style: solid;
     border-radius: 20px;
     border-color: rgb(32, 94, 94);
     font-size: 2rem;
-    
+    color: rgb(252, 251, 251);
 }
 
-#taskForm input[type="text"]  {
+#taskForm input[type="text"] {
 
     width: 20rem;
     height: 30px;
@@ -51,7 +63,8 @@ h3 {
     border-color: rgb(32, 94, 94);
 
 }
-#taskForm textarea  {
+
+#taskForm textarea {
     margin-left: 5px;
     width: 20rem;
     height: 5rem;
@@ -62,20 +75,130 @@ h3 {
     border-color: rgb(32, 94, 94);
 
 }
-label{
+
+label {
     font-size: 2.5rem;
 }
+
 button {
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 10px 20px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño del texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor apuntador al pasar sobre el botón */
+    background-color: #4CAF50;
+    /* Color de fondo */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    font-size: 16px;
+    /* Tamaño del texto */
+    border: none;
+    /* Sin borde */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cursor apuntador al pasar sobre el botón */
+}
+
+#btn-duracion {
+    background-color: #072668;
+    /* Color de fondo */
+    color: white;
+    /* Color del texto */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    font-size: 16px;
+    /* Tamaño del texto */
+    border: none;
+    /* Sin borde */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cursor apuntador al pasar sobre el botón */
+}
+
+#btn-tarea {
+    background-color: #4CAF50;
+    /* Color de fondo */
+    color: white;
+    /* Color del texto */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    font-size: 16px;
+    /* Tamaño del texto */
+    border: none;
+    /* Sin borde */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cursor apuntador al pasar sobre el botón */
 }
 
 /* Estilo cuando el mouse está sobre el botón */
 button:hover {
-    background-color: #45a049; /* Cambia el color de fondo al pasar el mouse */
+    background-color: #45a049;
+    /* Cambia el color de fondo al pasar el mouse */
+}
+
+.modal {
+    display: none;
+    /* Por defecto, el modal está oculto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+#taskFormStatus {
+    margin-left: 10px; /* Ajusta el margen según sea necesario */
+    width: auto;
+    margin-top: 10rem;
+    background-color: rgb(3, 32, 46);
+    text-align: center;
+    font-weight: bold;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: rgb(32, 94, 94);
+    font-size: 2rem;
+    color: rgb(252, 251, 251);
+}
+
+#taskList {
+    max-height: 200px;
+    overflow-y: auto;
+    /* ... (otros estilos) */
+}
+
+/* Estilo del scroll vertical en navegadores WebKit */
+#taskList::-webkit-scrollbar {
+    width: 10px;
+}
+
+#taskList::-webkit-scrollbar-thumb {
+    background-color: #4CAF50;
+    border-radius: 5px;
 }

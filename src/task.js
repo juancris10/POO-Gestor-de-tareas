@@ -1,6 +1,10 @@
-// task.js
+
+///tarea.js
+
 class Tarea {
+
     constructor(titulo, descripcion) {
+        this._id = Tarea.generarIdUnico();
         this._titulo = titulo;
         this._descripcion = descripcion;
         this._status = 'pendiente';
@@ -14,7 +18,9 @@ class Tarea {
     get status() {
         return this._status;
     }
-
+    set status(nuevoEstado){
+        this._status = nuevoEstado;
+    }
     get tiempo() {
         return this._tiempo;
     }
@@ -22,15 +28,30 @@ class Tarea {
     set titulo(nuevoTitulo) {
         this._titulo = nuevoTitulo;
     }
+
     get descripcion() {
         return this._descripcion;
     }
+
     set descripcion(nuevaDescripcion) {
         this._descripcion = nuevaDescripcion;
     }
 
-    markAsComplete() {
+    tareaCompletada() {
         this._status = 'completada';
+    }
+    tareaProgres() {
+        this._status = 'progreso';
+    }
+    get id() {
+        return this._id;
+    }
+
+    // ... (resto del código)
+
+    static generarIdUnico() {
+        // Esta función podría ser más sofisticada según tus necesidades
+        return new Date().getTime(); // En este ejemplo, usamos la marca de tiempo como ID
     }
 
     asignarTiempo(tiempo) {
@@ -38,7 +59,10 @@ class Tarea {
     }
 }
 
+///
+
 class AdminTareas {
+
     constructor() {
         this.tareas = [];
     }
@@ -48,10 +72,25 @@ class AdminTareas {
         const time = new MiTime();
         nuevaTarea.asignarTiempo(time); // Asignar el objeto MiTime a la tarea
         this.tareas.push(nuevaTarea);
-    }
+    }  
 }
 
+//
+class TareaImportante extends Tarea {
+    constructor(titulo, descripcion, prioridad) {
+        super(titulo, descripcion);
+        this._prioridad = prioridad;
+    }
+
+    realizarTarea() {
+        // Implementación específica para una tarea importante
+        console.log(`Realizando la tarea importante: ${this.titulo}`);
+    }
+}
+//
+
 class MiTime {
+
     constructor() {
         this._fecha = new Date();
         this._hora = new Date();
