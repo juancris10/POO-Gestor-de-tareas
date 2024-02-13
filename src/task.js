@@ -1,28 +1,14 @@
 
-///tarea.js
 
 class Tarea {
 
     constructor(titulo, descripcion) {
-        this._id = Tarea.generarIdUnico();
         this._titulo = titulo;
         this._descripcion = descripcion;
-        this._status = 'pendiente';
-        this._tiempo = new MiTime(); // Inicializar la propiedad _tiempo con un objeto MiTime por defecto
     }
 
     get titulo() {
         return this._titulo;
-    }
-
-    get status() {
-        return this._status;
-    }
-    set status(nuevoEstado){
-        this._status = nuevoEstado;
-    }
-    get tiempo() {
-        return this._tiempo;
     }
 
     set titulo(nuevoTitulo) {
@@ -37,43 +23,10 @@ class Tarea {
         this._descripcion = nuevaDescripcion;
     }
 
-    tareaCompletada() {
-        this._status = 'completada';
-    }
-    tareaProgres() {
-        this._status = 'progreso';
-    }
-    get id() {
-        return this._id;
-    }
-
-    // ... (resto del código)
-
-    static generarIdUnico() {
-        // Esta función podría ser más sofisticada según tus necesidades
-        return new Date().getTime(); // En este ejemplo, usamos la marca de tiempo como ID
-    }
-
-    asignarTiempo(tiempo) {
-        this._tiempo = tiempo;
-    }
+    
 }
 
-///
 
-class AdminTareas {
-
-    constructor() {
-        this.tareas = [];
-    }
-
-    añadirTarea(titulo, descripcion) {
-        const nuevaTarea = new Tarea(titulo, descripcion);
-        const time = new MiTime();
-        nuevaTarea.asignarTiempo(time); // Asignar el objeto MiTime a la tarea
-        this.tareas.push(nuevaTarea);
-    }  
-}
 
 //
 class TareaImportante extends Tarea {
@@ -81,13 +34,47 @@ class TareaImportante extends Tarea {
         super(titulo, descripcion);
         this._prioridad = prioridad;
     }
-
-    realizarTarea() {
-        // Implementación específica para una tarea importante
-        console.log(`Realizando la tarea importante: ${this.titulo}`);
+    get prioridad() {
+        return this._prioridad
     }
+    set prioridad(nvPrioridad) {
+        if (nvPrioridad.toLowerCase() === "alta" || nvPrioridad.toLowerCase() === "baja") {
+            this._prioridad = nvPrioridad;
+        } else {
+            console.error('Prioridad no válida. Debe ser "Alta" o "Baja".');
+        }
+    }
+
+
 }
 //
+
+class AdminTareas {
+    constructor() {
+        //creo el array para guardar las tareas y así recorrerlo y mostrarlo
+        this.tareas = [];
+    }
+
+    añadirTarea(titulo, descripcion, prioridad) {
+
+        const nuevaTarea = new TareaImportante(titulo, descripcion, prioridad);
+        this.tareas.push(nuevaTarea);
+       
+    }
+
+    eliminarTarea(indice) {
+        //uso el motodo de splice para eliminar
+        this.tareas.splice(indice, 1);
+    }
+    
+    modificarTarea(indice, nuevaTarea) {
+        //modifico la tarea por el indice
+        const tarea = this.tareas[indice];
+        tarea.titulo = nuevaTarea.titulo;
+        tarea.descripcion = nuevaTarea.descripcion;
+        tarea.prioridad = nuevaTarea.prioridad;
+   }
+}
 
 class MiTime {
 
@@ -97,11 +84,7 @@ class MiTime {
     }
 
     obtenerFechaFormateada() {
-        return this._fecha.toLocaleDateString('es-us', { weekday: "long", month: "long", day : "numeric" });
+        return this._fecha.toLocaleDateString('es-us', { weekday: "long", month: "long", day: "numeric" });
     }
 
-    obtenerHoraFormateada() {
-        const opcionesDeFormato = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
-        return this._hora.toLocaleTimeString(undefined, opcionesDeFormato);
-    }
 }

@@ -1,117 +1,73 @@
 const adminTareas = new AdminTareas();
-
-
-function añadirTarea() {
-  const tituloInput = document.getElementById('titulo');
-  const descripcionInput = document.getElementById('descripcion');
-
-  const titulo = tituloInput.value.trim();
-  const descripcion = descripcionInput.value.trim();
-
-
-  if (titulo !== '' && descripcion !== '') {
-    adminTareas.añadirTarea(titulo, descripcion);
-
-    mostrarTareas();
-    // Limpiar los campos después de añadir una tarea
-    tituloInput.value = '';
-    descripcionInput.value = '';
-  } else {
-    alert('Por favor, ingresa un título y una descripción.');
-  }
-
-}
-
+let tareaSeleccionadaIndex = null; // Almacena el índice de la tarea seleccionada
 
 function mostrarTareas() {
-  const listaTareas = document.getElementById('taskList');
-  listaTareas.innerHTML = '';  
+  const listaTareas = document.getElementById("taskList");// elemento ul
+  listaTareas.innerHTML = '';
 
-  adminTareas.tareas.forEach(tarea => {
+  adminTareas.tareas.forEach((tarea, indice) => {
+    
     const listItem = document.createElement('li');
-    listItem.textContent = `${tarea.titulo} - ${tarea.status}`;
+    listItem.textContent = `${tarea.titulo} - ${tarea.descripcion}`;
+    
+    listItem.classList.add('tarea-list-item'); //agrego la clase al archivo css
 
-    const btnEnProgreso = document.createElement('button');
-    btnEnProgreso.textContent = 'En progreso';
-    btnEnProgreso.addEventListener('click', () => moverTarea('En progreso'));
-
-    const btnTerminado = document.createElement('button');
-    btnTerminado.textContent = 'Terminado';
-    btnTerminado.addEventListener('click', () => moverTarea('Terminado'));
-
-    // Asegúrate de que los botones se muestren/oculten según el estado de la tarea
-    if (tarea.status === 'pendiente') {
-      listItem.appendChild(btnEnProgreso);
-      listItem.appendChild(btnTerminado);
+    
+    if (tarea.prioridad && tarea.prioridad.toLowerCase() === 'alta') { //cambio el color segun la prioridad que se elija
+      listItem.style.color = 'red';
+    } else if (tarea.prioridad && tarea.prioridad.toLowerCase() === 'baja') {
+      listItem.style.color = 'green';
     }
 
+    
+    const btnEliminar = crearBoton('Eliminar', 'btn-eliminar', () => {
+      adminTareas.eliminarTarea(indice);
+      mostrarTareas();
+    });
+    
+
+    listItem.appendChild(btnEliminar);
+
+    // Agregar botón "Modificar"
+    const btnModificar = crearBoton('Modificar', 'btn-modificar', (e) => {
+      e.preventDefault();
+      tareaSeleccionadaIndex = indice; // Almacenar el índice de la tarea seleccionada
+      const tituloModificar = document.getElementById('tituloModificar');
+      const descripcionModificar = document.getElementById('descripcionModificar');
+      const prioridadModificar = document.getElementById('prioridadModificar');
+
+      if (tituloModificar && descripcionModificar && prioridadModificar) {
+        tituloModificar.value = tarea.titulo;
+        descripcionModificar.value = tarea.descripcion;
+        prioridadModificar.value = tarea.prioridad;
+        abrirModalModificar();
+      }
+    });
+
+    listItem.appendChild(btnModificar);
     listaTareas.appendChild(listItem);
   });
 }
-function moverTarea(estado) {
-  const listaTareas = document.getElementById('taskList');
-  const tareaSeleccionada = listaTareas.lastElementChild;
 
-  if (tareaSeleccionada) {
-    // Remove task from taskList
-    listaTareas.removeChild(tareaSeleccionada);
-
-    // Add task to the corresponding section in taskFormStatus
-    const tareaEnProgreso = document.getElementById('tareaEnProgreso');
-    const tareaTerminada = document.getElementById('tareaTerminada');
-
-    const listItem = document.createElement('td');
-    listItem.textContent = tareaSeleccionada.textContent;
-
-    switch (estado) {
-      case 'En progreso':
-        tareaEnProgreso.appendChild(listItem);
-        break;
-      case 'Terminado':
-        tareaTerminada.appendChild(listItem);
-        break;
-      // Puedes agregar casos adicionales para otros estados si es necesario
-    }
-  }
-
-  // Toggle button visibility based on the new state
-  const btnEnProgreso = document.getElementById('btn-en-progreso');
-  const btnTerminado = document.getElementById('btn-terminado');
-
-  if (estado === 'En progreso') {
-    btnEnProgreso.style.display = 'none';
-    btnTerminado.style.display = 'inline-block';
-  } else if (estado === 'Terminado') {
-    btnTerminado.style.display = 'none';
-    btnTerminado.style.display = 'inline-block';
-
-  }
-  
-  // Aquí añadimos el código para mostrar el formulario de estado después de mover la tarea
-  const taskFormStatus = document.getElementById('taskFormStatus');
-  taskFormStatus.style.display = 'block';
-  // También podrías hacer scroll hacia la sección correspondiente si es necesario
-  // taskEnProgreso.scrollIntoView({ behavior: 'smooth' });
+function crearBoton(texto, clase, onClick) {
+  const boton = document.createElement('button');
+  boton.textContent = texto;
+  boton.classList.add(clase);
+  boton.addEventListener('click', onClick);
+  return boton;
 }
 
 const fechaID = document.getElementById('fecha');
 
-fechaID.innerHTML = '';
-
 const time = new MiTime()
-
 const fecha = time.obtenerFechaFormateada()
-const fechaHoraElementh2 = document.createElement('h4');
-fechaHoraElementh2.textContent = `  ${fecha}`;
+const fechaHoraElementh2 = document.createElement('h3');
+fechaHoraElementh2.textContent = `  ${fecha}` ;
 
-const fechaInssert = document.createElement('h4');
+fechaID.appendChild(fechaHoraElementh2);
 
-fechaInssert.appendChild(fechaHoraElementh2);
-
-fechaID.appendChild(fechaInssert);
-
-// Agrega esto al final de tu archivo app.js
 const modal = document.getElementById('modal');
+const modalModificar = document.getElementById('modalModificar');
 
 function abrirModal() {
   modal.style.display = 'block';
@@ -121,10 +77,50 @@ function cerrarModal() {
   modal.style.display = 'none';
 }
 
-function guardarPrioridad() {
-  // Agrega aquí la lógica para guardar la duración
-  cerrarModal(); // Cierra el modal después de guardar
+function abrirModalModificar() {
+  modalModificar.style.display = 'block';
+}
+
+function cerrarModalModificar() {
+  modalModificar.style.display = 'none';
+}
+
+function guardarTarea(prioridad) {
+  const tituloInput = document.getElementById('titulo');
+  const descripcionInput = document.getElementById('descripcion');
+
+  const titulo = tituloInput.value.trim();
+  const descripcion = descripcionInput.value.trim();
+
+  if (titulo !== '' && descripcion !== '') {
+    adminTareas.añadirTarea(titulo, descripcion, prioridad);
+    cerrarModal();
+  }
+  mostrarTareas();
+  document.getElementById("taskForm").reset();
 }
 
 // Evento de clic para abrir el modal cuando se hace clic en el botón
 document.getElementById('btn-prioridad').addEventListener('click', abrirModal);
+document.getElementById('btn-cerrar').addEventListener('click', cerrarModal);
+document.getElementById('btn-guardar-modificar').addEventListener('click', guardarCambiosModificar);
+
+
+
+function guardarCambiosModificar() {
+  if (tareaSeleccionadaIndex !== null) {
+    const titulo = document.getElementById('tituloModificar').value;
+    const descripcion = document.getElementById('descripcionModificar').value;
+    const prioridad = document.getElementById('prioridadModificar').value;
+
+    adminTareas.modificarTarea(tareaSeleccionadaIndex, {
+      titulo,
+      descripcion,
+      prioridad
+    });
+
+    cerrarModalModificar();
+    mostrarTareas();
+    tareaSeleccionadaIndex = null;
+  }
+}

@@ -2,80 +2,87 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>to do list</title>
-    <link href="https://fonts.cdnfonts.com/css/monaco" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="list-icon.png">
-</head>
+    <head>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>to do list</title>
+        <link href="https://fonts.cdnfonts.com/css/monaco" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="list-icon.png">
+    </head>
 
-<body>
-    <h1>To do list</h1>
-    <div id="container">
-        <form id="taskForm">
-            <span id="fecha"></span>
-            <br>
-            <label for="title">Titulo:</label>
-            <br>
-            <span id="fechaHora"></span>
-            <br>
-            <input type="text" id="titulo" required>
-            <br>
-            <label for="description">Descripcion:</label>
-            <br>
-            <textarea id="descripcion" required></textarea>
-            <br>
-            <button type="button" id="btn-prioridad">Prioridad</button>
-            <br>
-            <br>
-            <button type="button" id="btn-tarea" onclick="añadirTarea()">Agregar Tarea</button>
-            <button type="button" id="btn-en-progreso" style="display: none;" onclick="moverTarea('En progreso')">En
-                progreso</button>
-            <button type="button" id="btn-terminado" style="display: none;" onclick="moverTarea('Terminado')">Terminado
-            </button>
-            <ul id="taskList"></ul>
-        </form>
-        <form id="taskFormStatus">
-            <table>
-                <caption>Tareas</caption>
-                <tr>
-                    <th><strong>En progreso</strong></th>
-                    <th><strong>Finalizados</strong></th>
-                </tr>
-                <tr id="tareaPendiente">
-                    <!-- Sección para tareas pendientes -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr id="tareaEnProgreso">
-                    <!-- Sección para tareas en progreso -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr id="tareaTerminada">
-                    <!-- Sección para tareas terminadas -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-            </table>
-        </form>
-    </div>
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <!-- Contenido del modal -->
-            <span class="close" onclick="cerrarModal()">&times;</span>
-            <label for="duracion">Prioridad de la tarea</label>
-            <input type="text" id="duracion" placeholder="Ingrese la duración">
-            <button onclick="guardarPrioridad()">Guardar</button>
+    <body>
+        <h1>To do list</h1>
+        <div id="container">
+
+            <form id="taskForm">
+                <span id="fecha"></span>
+                <br>
+                <label for="title">Titulo:</label>
+                <br>
+                <span id="fechaHora"></span>
+                <br>
+                <input type="text" id="titulo" required>
+                <br>
+                <label for="description">Descripcion:</label>
+                <br>
+                <textarea id="descripcion" required></textarea>
+                <br>
+                <button type="button" id="btn-prioridad">Agregar
+                    Prioridad</button>
+                <br>
+                <br>
+
+            </form>
+            <form id="taskFormStatus">
+                <span>Tareas</span>
+                <ul id="taskList"></ul>
+
+            </form>
         </div>
-    </div>
-    <script src="task.js"></script>
-    <script src="app.js"></script>
-</body>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <!-- Contenido del modal -->
+                <span class="close" onclick="cerrarModal()">&times;</span>
+                <label for="duracion">Prioridad de la tarea</label>
+                <button name="prioridad" id="btn-alta"
+                    onclick="guardarTarea('Alta')">Alta</button>
+                <button name="prioridad" id="btn-baja"
+                    onclick="guardarTarea('Baja')">Baja</button>
+
+            </div>
+        </div>
+        <!-- Modal para modificar tarea -->
+        <div id="modalModificar" class="modal">
+            <div class="modal-content">
+                <!-- Contenido del modalModificar -->
+                <span class="close"
+                    onclick="cerrarModalModificar()">&times;</span>
+                <label for="tituloModificar">Modificar Tarea</label>
+                <br>
+                <input type="text" id="tituloModificar"
+                    placeholder="Nuevo título">
+                <br>
+                <textarea id="descripcionModificar"
+                    placeholder="Nueva descripción"></textarea>
+                <br>
+                <select  id="prioridadModificar"  > 
+                    <option value="alta">Alta</option>
+                    <option value="baja">Baja</option>
+                </select>
+                <br>
+                <button id="btn-guardar-modificar"
+                    onclick="guardarCambios()">Guardar Cambios</button>
+                <button class="close" id="btn-cerrar"
+                    onclick="cerrarModalModificar()">Cerrar</button>
+
+
+            </div>
+        </div>
+
+        <script src="task.js"></script>
+        <script src="app.js"></script>
+        
+    </body>
 
 </html>
